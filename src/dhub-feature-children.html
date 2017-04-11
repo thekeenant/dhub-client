@@ -1,0 +1,20 @@
+<link rel="import" href="/bower_components/polymer/polymer.html">
+<link rel="import" href="./dhub-network.html">
+
+<dom-module id="dhub-feature-children">
+    <template>
+        <h3>Children</h3>
+        <div style="margin-left: 30px">
+            <dhub-network path="[[path]]"></dhub-network>
+        </div>
+    </template>
+
+    <script>
+        Polymer({
+            is: 'dhub-feature-children',
+            properties: {
+                path: String
+            }
+        });
+    </script>
+</dom-module>

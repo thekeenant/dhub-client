@@ -1,0 +1,19 @@
+<html>
+<head>
+    <script src="/bower_components/webcomponentsjs/webcomponents-loader.js"></script>
+    <link rel="import" href="/bower_components/polymer/polymer.html">
+    <link rel="import" href="/src/dhub-network.html">
+    <script type="text/javascript">
+        function supportsPolymer() {
+            return 'content' in document.createElement('template') && 'import' in document.createElement('link') && 'registerElement' in document && document.head.createShadowRoot;
+        }
+
+        if (!supportsPolymer()) {
+            alert("No. Stop and use a browser like Chrome.");
+        }
+    </script>
+</head>
+<body>
+    <dhub-network path="http://192.168.0.102:4567/api/v1/networks/ttyACM1"></dhub-network>
+</body>
+</html>

@@ -1,0 +1,38 @@
+<link rel="import" href="/bower_components/polymer/polymer.html">
+<link rel="import" href="/bower_components/iron-ajax/iron-ajax.html">
+<link rel="import" href="./dhub-device.html">
+
+<dom-module id="dhub-network">
+    <template>
+        <iron-ajax
+                id="iron"
+                auto
+                url="[[path]]"
+                handle-as="json"
+                on-response="handleResponse"
+                debounce-duration="300"></iron-ajax>
+    </template>
+
+    <script>
+        Polymer({
+            is: 'dhub-network',
+            properties: {
+                path: String
+            },
+            handleResponse: function(data) {
+                var json = data.detail.response;
+
+                var devicesArray = json['devices'];
+                for (var index in devicesArray) {
+                    var deviceInfo = devicesArray[index];
+                    var deviceId = deviceInfo['id'];
+
+                    var device = document.createElement("dhub-device");
+                    device.setAttribute("path", this.path + "/devices/" + deviceId);
+
+                    Polymer.dom(this.root).appendChild(device);
+                }
+            }
+        });
+    </script>
+</dom-module>

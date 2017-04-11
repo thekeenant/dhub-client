@@ -1,0 +1,60 @@
+<link rel="import" href="/bower_components/polymer/polymer.html">
+<link rel="import" href="/bower_components/iron-ajax/iron-ajax.html">
+<link rel="import" href="./dhub-feature-binary.html">
+<link rel="import" href="./dhub-feature-children.html">
+<link rel="import" href="./dhub-feature-level.html">
+
+<dom-module id="dhub-device">
+    <template>
+        <iron-ajax
+                id="ajax"
+                auto
+                url="[[path]]"
+                handle-as="json"
+                on-response="handleAjax"
+                debounce-duration="300"></iron-ajax>
+    </template>
+
+    <script>
+        Polymer({
+            is: 'dhub-device',
+            properties: {
+                path: String
+            },
+            handleAjax: function(data) {
+                var json = data.detail.response;
+                var featuresJson = json['features'];
+
+                var feature;
+
+                if ('binary' in featuresJson) {
+                    var data = featuresJson['binary'];
+                    var state = data['state'];
+
+                    feature = document.createElement('dhub-feature-binary');
+                    feature.setAttribute('path', this.path);
+                    if (state) {
+                        feature.setAttribute('state', '');
+                    }
+                    Polymer.dom(this.root).appendChild(feature);
+                }
+
+                if ('children' in featuresJson) {
+                    var childrenNetwork = document.createElement('dhub-feature-children');
+                    childrenNetwork.setAttribute('path', this.path + '/features/children');
+                    Polymer.dom(this.root).appendChild(childrenNetwork);
+                }
+
+                if ('level' in featuresJson) {
+                    var data = featuresJson['level'];
+                    var level = data['level'];
+
+                    feature = document.createElement('dhub-feature-level');
+                    feature.setAttribute('level', level);
+                    feature.setAttribute('path', this.path);
+                    Polymer.dom(this.root).appendChild(feature);
+                }
+            }
+        });
+    </script>
+</dom-module>

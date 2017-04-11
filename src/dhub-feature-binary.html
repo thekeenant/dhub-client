@@ -1,0 +1,51 @@
+<link rel="import" href="/bower_components/polymer/polymer.html">
+<link rel="import" href="/bower_components/paper-toggle-button/paper-toggle-button.html">
+
+<dom-module id="dhub-feature-binary">
+    <template>
+        <paper-toggle-button id="toggle"></paper-toggle-button>
+    </template>
+
+    <script>
+        Polymer({
+            is: 'dhub-feature-binary',
+            properties: {
+                path: String,
+                state: Boolean
+            },
+            ready: function() {
+                var that = this;
+
+                var toggle = this.$.toggle;
+                if (this.state) {
+                    toggle.setAttribute('checked', '');
+                }
+                else {
+                    toggle.removeAttribute('checked');
+                }
+
+                toggle.addEventListener('change', function() {
+                    var state = toggle.hasAttribute('checked');
+                    toggle.setAttribute('disabled', '');
+
+                    var xhr = new XMLHttpRequest();
+                    xhr.open("PUT", that.path + "/features/binary", true);
+                    xhr.setRequestHeader("Content-type", "application/json");
+
+                    xhr.onreadystatechange = function () {
+                        if(xhr.readyState === XMLHttpRequest.DONE && xhr.status === 200) {
+                            toggle.removeAttribute('disabled');
+                        }
+
+                    };
+
+                    var data = JSON.stringify({
+                        "state": state
+                    });
+
+                    xhr.send(data);
+                })
+            }
+        });
+    </script>
+</dom-module>

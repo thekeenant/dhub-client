@@ -1,0 +1,31 @@
+{
+  "name": "dhub-client",
+  "authors": [
+    "thekeenant <keenan@keenant.com>"
+  ],
+  "description": "A client for dhub.",
+  "main": "",
+  "keywords": [
+    "hub",
+    "home",
+    "automation"
+  ],
+  "license": "MIT",
+  "homepage": "https://keenant.com",
+  "private": true,
+  "ignore": [
+    "**/.*",
+    "node_modules",
+    "bower_components",
+    "test",
+    "tests"
+  ],
+  "dependencies": {
+    "polymer": "Polymer/polymer#^2.0.0-rc.3",
+    "paper-checkbox": "#2.0-preview",
+    "paper-radio-button": "#2.0-preview",
+    "paper-toggle-button": "#2.0-preview",
+    "paper-slider": "#2.0-preview",
+    "iron-ajax": "#2.0-preview"
+  }
+}

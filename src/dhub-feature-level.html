@@ -1,0 +1,42 @@
+<link rel="import" href="/bower_components/polymer/polymer.html">
+<link rel="import" href="/bower_components/paper-slider/paper-slider.html">
+
+<dom-module id="dhub-feature-level">
+    <template>
+        <paper-slider id="slider"></paper-slider>
+    </template>
+
+    <script>
+        Polymer({
+            is: 'dhub-feature-level',
+            properties: {
+                path: String,
+                level: Number
+            },
+            ready: function() {
+                var that = this;
+
+                var slider = this.$.slider;
+                slider.setAttribute("value", this.level);
+
+                slider.addEventListener('change', function() {
+                    var level = parseInt(slider.getAttribute('value'));
+
+                    var xhr = new XMLHttpRequest();
+                    xhr.open("PUT", that.path + "/features/level", true);
+                    xhr.setRequestHeader("Content-type", "application/json");
+
+                    xhr.onreadystatechange = function () {
+
+                    };
+
+                    var data = JSON.stringify({
+                        "level": level
+                    });
+
+                    xhr.send(data);
+                })
+            }
+        });
+    </script>
+</dom-module>
